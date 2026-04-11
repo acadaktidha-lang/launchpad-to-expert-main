@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 18% 7%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 18% 7%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 42 100% 55%;
+    --primary-foreground: 220 20% 4%;
+
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 220 12% 10%;
+    --muted-foreground: 220 8% 50%;
+
+    --accent: 220 70% 55%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 12% 14%;
+    --input: 220 12% 14%;
+    --ring: 42 100% 55%;
+
+    --radius: 0.75rem;
+
+    --phase-student: 210 100% 60%;
+    --phase-internee: 160 80% 45%;
+    --phase-shadow: 270 70% 55%;
+    --phase-expert: 42 100% 55%;
+
+    --font-display: 'Syne', sans-serif;
+    --font-body: 'Inter', sans-serif;
+
+    --sidebar-background: 220 18% 7%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 42 100% 55%;
+    --sidebar-primary-foreground: 220 20% 4%;
+    --sidebar-accent: 220 15% 12%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 220 12% 14%;
+    --sidebar-ring: 42 100% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(42 100% 55%), hsl(32 100% 48%));
+  }
+
+  .slide-overlay {
+    background: linear-gradient(
+      to right,
+      hsl(var(--background) / 0.92) 0%,
+      hsl(var(--background) / 0.75) 40%,
+      hsl(var(--background) / 0.3) 70%,
+      transparent 100%
+    );
+  }
+
+  .slide-overlay-phase {
+    background: linear-gradient(
+      to right,
+      hsl(var(--background) / 0.88) 0%,
+      hsl(var(--background) / 0.7) 35%,
+      hsl(var(--background) / 0.2) 75%,
+      transparent 100%
+    );
+  }
+
+  .progress-track {
+    @apply h-[2px] bg-foreground/10 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-[5000ms] ease-linear;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.4));
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
