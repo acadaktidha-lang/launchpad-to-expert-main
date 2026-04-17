@@ -6,52 +6,52 @@
 
 @layer base {
   :root {
-    --background: 220 20% 4%;
+    --background: 244 35% 8%;
     --foreground: 0 0% 98%;
 
-    --card: 220 18% 7%;
+    --card: 244 35% 11%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 220 18% 7%;
+    --popover: 244 35% 11%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 42 100% 55%;
-    --primary-foreground: 220 20% 4%;
+    --primary: 33 93% 54%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 220 15% 12%;
+    --secondary: 244 48% 26%;
     --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 12% 10%;
-    --muted-foreground: 220 8% 50%;
+    --muted: 244 30% 12%;
+    --muted-foreground: 244 15% 55%;
 
-    --accent: 220 70% 55%;
+    --accent: 244 48% 26%;
     --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 12% 14%;
-    --input: 220 12% 14%;
-    --ring: 42 100% 55%;
+    --border: 244 20% 18%;
+    --input: 244 20% 18%;
+    --ring: 33 93% 54%;
 
     --radius: 0.75rem;
 
     --phase-student: 210 100% 60%;
     --phase-internee: 160 80% 45%;
     --phase-shadow: 270 70% 55%;
-    --phase-expert: 42 100% 55%;
+    --phase-expert: 33 93% 54%;
 
     --font-display: 'Syne', sans-serif;
     --font-body: 'Inter', sans-serif;
 
-    --sidebar-background: 220 18% 7%;
+    --sidebar-background: 244 35% 10%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 42 100% 55%;
-    --sidebar-primary-foreground: 220 20% 4%;
-    --sidebar-accent: 220 15% 12%;
+    --sidebar-primary: 33 93% 54%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 244 48% 26%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 220 12% 14%;
-    --sidebar-ring: 42 100% 55%;
+    --sidebar-border: 244 20% 18%;
+    --sidebar-ring: 33 93% 54%;
   }
 }
 
@@ -70,6 +70,7 @@
     font-family: var(--font-display);
   }
 
+
   ::selection {
     background: hsl(var(--primary) / 0.3);
     color: hsl(var(--foreground));
@@ -79,7 +80,18 @@
 @layer components {
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(42 100% 55%), hsl(32 100% 48%));
+    background-image: linear-gradient(135deg, hsl(33 93% 54%), hsl(244 48% 55%));
+  }
+
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 2px hsl(var(--foreground) / 0.85);
+  }
+
+  .text-gradient-expert {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(33 93% 60%), hsl(33 93% 45%));
+    filter: drop-shadow(0 0 24px hsl(33 93% 54% / 0.5));
   }
 
   .slide-overlay {

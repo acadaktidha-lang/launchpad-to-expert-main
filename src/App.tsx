@@ -8,6 +8,7 @@ import Courses from "./pages/Courses.tsx";
 import Curriculum from "./pages/Curriculum.tsx";
 import About from "./pages/About.tsx";
 import Franchise from "./pages/Franchise.tsx";
+import Enroll from "./pages/Enroll.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/curriculum" element={<Curriculum />} />
           <Route path="/about" element={<About />} />
           <Route path="/franchise" element={<Franchise />} />
+          <Route path="/enroll" element={<Enroll />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -1,11 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ArrowRight, BookOpen, Briefcase, Users, Award } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-
-import logo from "@/assets/logo.png";
+import { Link } from "react-router-dom";
 import heroMainBg from "@/assets/hero-main-bg.jpg";
-import slideStudent from "@/assets/slide-student.jpg";
+import slideStudent from "@/assets/slide-student.png";
 import slideInternee from "@/assets/slide-internee.jpg";
 import slideShadow from "@/assets/slide-shadow.jpg";
 import slideExpert from "@/assets/slide-expert.jpg";
@@ -88,8 +86,6 @@ const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const [progress, setProgress] = useState(0);
   const [direction, setDirection] = useState(1);
-  const location = useLocation();
-
   const goTo = useCallback(
     (index: number) => {
       setDirection(index > current ? 1 : -1);
@@ -167,38 +163,9 @@ const HeroSection = () => {
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col justify-between">
-        {/* Top nav hint */}
-        <div className="flex items-center justify-between px-8 md:px-16 pt-8">
-          <Link to="/" className="h-8 hover:opacity-80 transition-opacity flex-shrink-0">
-            <img src={logo} alt="Big Binary Tech" className="h-full w-auto" />
-          </Link>
-          
-          {/* Navigation links */}
-          <div className="hidden lg:flex items-center gap-3">
-            {[
-              { label: "Courses", href: "/courses" },
-              { label: "Curriculum", href: "/curriculum" },
-              { label: "Our Approach", href: "/about" },
-              { label: "Franchise", href: "/franchise" },
-              { label: "Enroll", href: "#enroll" }
-            ].map((link) => (
-              <Link
-                key={link.label}
-                to={link.href}
-                className={`px-5 py-2.5 text-sm font-medium rounded-full border transition-all duration-300 ${
-                  link.href === location.pathname
-                    ? "border-primary bg-primary/10 text-primary"
-                    : "border-foreground/15 text-foreground/80 hover:border-primary/50 hover:text-primary"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
 
         {/* Main content */}
-        <div className="flex-1 flex items-center px-8 md:px-16 lg:px-24">
+        <div className="flex-1 flex items-center px-6 sm:px-10 md:px-16 lg:px-24 pt-24 sm:pt-28">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={slide.id}
@@ -207,19 +174,19 @@ const HeroSection = () => {
               initial="enter"
               animate="center"
               exit="exit"
-              className="max-w-2xl"
+              className="max-w-2xl w-full"
             >
               {/* Phase badge */}
               {slide.phase && (
-                <motion.div variants={childVariants} className="flex items-center gap-3 mb-6">
+                <motion.div variants={childVariants} className="flex items-center gap-3 mb-4 sm:mb-6">
                   <span
-                    className="flex items-center justify-center w-10 h-10 rounded-xl"
+                    className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl"
                     style={{ background: `hsl(${slide.color.replace("var(--", "").replace(")", "")} / 0.15)`, color: `hsl(${slide.color.replace("var(--", "").replace(")", "")})` }}
                   >
                     {slide.icon}
                   </span>
                   <span
-                    className="text-sm font-medium tracking-widest uppercase"
+                    className="text-xs sm:text-sm font-medium tracking-widest uppercase"
                     style={{ color: `hsl(${slide.color.replace("var(--", "").replace(")", "")})` }}
                   >
                     {slide.subtitle}
@@ -229,8 +196,8 @@ const HeroSection = () => {
 
               {/* Badge for main slide */}
               {!slide.phase && (
-                <motion.div variants={childVariants} className="mb-6">
-                  <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
+                <motion.div variants={childVariants} className="mb-4 sm:mb-6">
+                  <span className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-primary/10 border border-primary/20">
                     <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                     <span className="text-xs font-medium tracking-widest uppercase text-primary">
                       {slide.subtitle}
@@ -242,13 +209,15 @@ const HeroSection = () => {
               {/* Title */}
               <motion.h1
                 variants={childVariants}
-                className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight text-foreground mb-5"
+                className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-7xl leading-[1.05] tracking-tight mb-4 sm:mb-5"
               >
                 {current === 0 ? (
                   <>
-                    From Zero
-                    <br />
-                    to <span className="text-gradient-gold">Expert</span>
+                    <span className="text-outline block uppercase tracking-widest">From Zero</span>
+                    <span className="block">
+                      <span className="text-foreground/40 text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-light italic mr-3">to</span>
+                      <span className="text-gradient-expert">Expert</span>
+                    </span>
                   </>
                 ) : (
                   slide.title
@@ -258,22 +227,22 @@ const HeroSection = () => {
               {/* Description */}
               <motion.p
                 variants={childVariants}
-                className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mb-8"
+                className="text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-lg mb-6 sm:mb-8"
               >
                 {slide.description}
               </motion.p>
 
               {/* CTA */}
-              <motion.div variants={childVariants} className="flex items-center gap-4">
+              <motion.div variants={childVariants} className="flex flex-wrap items-center gap-3">
                 <Link
                   to={current === 0 ? "/courses" : "#"}
-                  className="group flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-primary text-primary-foreground font-display font-semibold text-sm hover:brightness-110 transition-all duration-300"
+                  className="group flex items-center gap-2.5 px-5 sm:px-7 py-3 sm:py-3.5 rounded-full bg-primary text-primary-foreground font-display font-semibold text-sm hover:brightness-110 transition-all duration-300"
                 >
                   {current === 0 ? "View Courses" : `Explore ${slide.phase}`}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 {current === 0 && (
-                  <button className="flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300">
+                  <button className="flex items-center gap-2 px-4 sm:px-6 py-3 sm:py-3.5 rounded-full text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300">
                     Learn More
                     <ChevronRight className="w-4 h-4" />
                   </button>
@@ -284,8 +253,8 @@ const HeroSection = () => {
         </div>
 
         {/* Bottom navigation */}
-        <div className="px-8 md:px-16 pb-8">
-          <div className="flex items-end justify-between gap-8">
+        <div className="px-6 sm:px-10 md:px-16 pb-6 sm:pb-8">
+          <div className="flex items-end justify-between gap-4">
             {/* Slide indicators */}
             <div className="flex gap-1.5 items-end">
               {slides.map((s, i) => (

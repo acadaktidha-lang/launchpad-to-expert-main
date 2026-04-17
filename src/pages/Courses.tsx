@@ -9,22 +9,27 @@ import { Link } from "react-router-dom";
 
 type FilterType = "all" | "ai" | "build" | "money" | "creative" | "fast";
 
+const filters: { id: FilterType; label: string }[] = [
+  { id: "all",      label: "All Tracks" },
+  { id: "ai",       label: "AI & Cloud" },
+  { id: "build",    label: "Software Dev" },
+  { id: "money",    label: "High Demand" },
+  { id: "creative", label: "Design & Creative" },
+  { id: "fast",     label: "Shortest Track" },
+];
+
 const Courses = () => {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
-
-  const filters: { id: FilterType; label: string }[] = [
-    { id: "all", label: "All Tracks" },
-    { id: "ai", label: "AI & Cloud" },
-    { id: "build", label: "Software Dev" },
-    { id: "money", label: "Highest Earning" },
-    { id: "creative", label: "Design & Creative" },
-    { id: "fast", label: "Fastest to Income" }
-  ];
 
   const filteredCourses =
     activeFilter === "all"
       ? coursesData
-      : coursesData.filter((course) => course.filters.includes(activeFilter));
+      : coursesData.filter((c) => c.filters.includes(activeFilter));
+
+  const handleFilter = (id: FilterType) => {
+    setActiveFilter(id);
+    document.getElementById("courses-grid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,7 +71,7 @@ const Courses = () => {
       </section>
 
       {/* Filter Bar */}
-      <div className="sticky top-20 md:top-20 z-40 bg-background/95 backdrop-blur border-b border-border px-6 md:px-12 py-6">
+      <div className="sticky top-20 z-10 bg-background/95 backdrop-blur border-b border-border px-6 md:px-12 py-6">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-wrap gap-3 items-center">
             <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest">
@@ -76,7 +81,7 @@ const Courses = () => {
               {filters.map((filter) => (
                 <button
                   key={filter.id}
-                  onClick={() => setActiveFilter(filter.id)}
+                  onClick={() => handleFilter(filter.id)}
                   className={`px-4 py-2 text-xs font-semibold uppercase tracking-wider rounded-full transition-all ${
                     activeFilter === filter.id
                       ? "bg-primary text-primary-foreground"
@@ -92,7 +97,7 @@ const Courses = () => {
       </div>
 
       {/* Courses Grid */}
-      <section className="py-20 px-6 md:px-12">
+      <section id="courses-grid" className="py-20 px-6 md:px-12">
         <div className="max-w-6xl mx-auto space-y-8">
           {filteredCourses.map((course) => (
             <CourseCard key={course.id} course={course} />
