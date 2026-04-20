@@ -3,30 +3,43 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
 
+// Validate required environment variables
+const requiredEnvVars = ["GMAIL_USER", "GMAIL_APP_PASSWORD", "RECEIVER_EMAIL"];
+const missingVars = requiredEnvVars.filter((env) => !process.env[env]);
+if (missingVars.length > 0) {
+  console.error("❌ Missing required environment variables:", missingVars.join(", "));
+  console.error("Please set these in your Vercel project settings or .env file");
+}
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(express.json());
-const allowedOrigins = [
-  "http://localhost:8080",
-  "http://localhost:5173",
-  "https://www.bigbinaryerp.com",
-  "https://big-binary-erp.vercel.app",
-  "https://big-binary-erp-backend.vercel.app",
-  process.env.FRONTEND_URL,
-].filter(Boolean);
 
+// CORS configuration - accept vercel deployments and localhost
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
+      const allowedOrigins = [
+        "http://localhost:8080",
+        "http://localhost:5173",
+        "https://www.bigbinaryerp.com",
+        "https://big-binary-erp.vercel.app",
+        "https://big-binary-erp-backend.vercel.app",
+        process.env.FRONTEND_URL,
+      ].filter(Boolean);
+
+      // Allow vercel.app domains and configured origins
+      if (!origin || allowedOrigins.includes(origin) || /https:\/\/.*\.vercel\.app$/.test(origin)) {
         callback(null, true);
       } else {
+        console.warn(`❌ CORS blocked: ${origin}`);
         callback(new Error("Not allowed by CORS"));
       }
     },
     methods: ["POST", "GET"],
+    credentials: true,
   })
 );
 
@@ -62,10 +75,22 @@ function validateContactForm({ firstName, lastName, email, service, message }) {
 app.post("/api/contact", async (req, res) => {
   const { firstName, lastName, email, phone, service, message } = req.body;
 
+  console.log(`📨 New form submission from ${email} for service: ${service}`);
+
   // Validate
   const validationError = validateContactForm({ firstName, lastName, email, service, message });
   if (validationError) {
+    console.warn(`⚠️ Validation error: ${validationError}`);
     return res.status(400).json({ success: false, error: validationError });
+  }
+
+  // Check if email credentials are configured
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+    console.error("❌ Email credentials not configured");
+    return res.status(500).json({
+      success: false,
+      error: "Email service not configured. Please contact support.",
+    });
   }
 
   try {
@@ -165,7 +190,11 @@ app.post("/api/contact", async (req, res) => {
 
     return res.status(200).json({ success: true, message: "Email sent successfully!" });
   } catch (err) {
-    console.error("❌ Email send error:", err.message);
+    console.error("❌ Email send error:", {
+      message: err.message,
+      code: err.code,
+      stack: err.stack,
+    });
     return res.status(500).json({ success: false, error: "Failed to send email. Please try again." });
   }
 });

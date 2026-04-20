@@ -46,7 +46,8 @@ const Enroll = () => {
     setErrorMsg("");
 
     try {
-      const res = await fetch("/api/contact", {
+      const apiUrl = import.meta.env.VITE_API_URL || "/api/contact";
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -59,6 +60,10 @@ const Enroll = () => {
         }),
       });
 
+      if (!res.ok) {
+        throw new Error(`Server returned ${res.status}: ${res.statusText}`);
+      }
+
       const data = await res.json();
       if (data.success) {
         setStatus("success");
@@ -67,9 +72,11 @@ const Enroll = () => {
         setStatus("error");
         setErrorMsg(data.error || "Something went wrong. Please try again.");
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setErrorMsg("Could not reach the server. Please try again later.");
+      const errorMessage = err instanceof Error ? err.message : "Could not reach the server. Please try again later.";
+      setErrorMsg(errorMessage);
+      console.error("Form submission error:", errorMessage);
     }
   };
 
