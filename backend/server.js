@@ -27,6 +27,7 @@ app.use(
         "https://www.bigbinaryerp.com",
         "https://big-binary-erp.vercel.app",
         "https://big-binary-erp-backend.vercel.app",
+        "https://www.bbt.edu.pk",
         process.env.FRONTEND_URL,
       ].filter(Boolean);
 
