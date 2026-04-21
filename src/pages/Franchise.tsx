@@ -197,7 +197,7 @@ const Franchise = () => {
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
                 className={`p-8 relative overflow-hidden transition-all ${
-                  tier.featured ? "bg-accent text-background" : "bg-card hover:bg-card/80"
+                  tier.featured ? "bg-[#F6931D] text-white" : "bg-[#262261] hover:bg-[#262261]/90 text-white"
                 }`}
               >
                 <div className="absolute -top-6 -right-6 text-8xl font-display font-900 opacity-10">
@@ -205,14 +205,16 @@ const Franchise = () => {
                 </div>
 
                 <div className="relative z-10">
-                  <div className="text-xs font-mono uppercase tracking-wider mb-3 text-accent/80">
+                  <div className={`text-xs font-mono uppercase tracking-wider mb-3 ${
+                    tier.featured ? "text-white/70" : "text-[#F6931D]"
+                  }`}>
                     {tier.category}
                   </div>
                   <div
                     className={`inline-block text-xs font-bold uppercase px-3 py-1 rounded-full mb-4 ${
                       tier.featured
-                        ? "bg-background text-accent"
-                        : "bg-accent/20 text-accent border border-accent/30"
+                        ? "bg-[#262261] text-white"
+                        : "bg-[#F6931D]/20 text-[#F6931D] border border-[#F6931D]/40"
                     }`}
                   >
                     {tier.badge}
@@ -222,20 +224,14 @@ const Franchise = () => {
 
                   <div className="mb-1">
                     <div className="text-3xl font-display font-900">{formatPKR(tier.fee)}M</div>
-                    <div className={`text-xs ${tier.featured ? "text-background/60" : "text-muted-foreground"}`}>
+                    <div className={`text-xs ${tier.featured ? "text-white/60" : "text-white/50"}`}>
                       {tier.feeLabel}
                     </div>
                   </div>
 
-                  <div
-                    className={`h-px my-4 ${tier.featured ? "bg-background/20" : "bg-border"}`}
-                  ></div>
+                  <div className={`h-px my-4 ${tier.featured ? "bg-white/20" : "bg-white/15"}`}></div>
 
-                  <div
-                    className={`space-y-3 mb-4 text-sm ${
-                      tier.featured ? "text-background/80" : "text-muted-foreground"
-                    }`}
-                  >
+                  <div className="space-y-3 mb-4 text-sm text-white/80">
                     <div className="flex justify-between">
                       <span>At MOU Signing</span>
                       <span className="font-semibold">PKR {(tier.mouSigning / 100000).toFixed(1)}M</span>
@@ -248,7 +244,7 @@ const Franchise = () => {
 
                   <div
                     className={`p-3 rounded flex items-center justify-between ${
-                      tier.featured ? "bg-background/20" : "bg-black/20"
+                      tier.featured ? "bg-[#262261]/50" : "bg-white/10"
                     }`}
                   >
                     <span className="text-xs font-mono uppercase tracking-wide">Monthly Royalty</span>
