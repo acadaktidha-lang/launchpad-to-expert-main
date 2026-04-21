@@ -46,8 +46,7 @@ const Enroll = () => {
     setErrorMsg("");
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || "/api/contact";
-      const res = await fetch(apiUrl, {
+      const res = await fetch("https://launchpad-to-expert-main-pl1n.vercel.app/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -60,10 +59,6 @@ const Enroll = () => {
         }),
       });
 
-      if (!res.ok) {
-        throw new Error(`Server returned ${res.status}: ${res.statusText}`);
-      }
-
       const data = await res.json();
       if (data.success) {
         setStatus("success");
@@ -72,11 +67,9 @@ const Enroll = () => {
         setStatus("error");
         setErrorMsg(data.error || "Something went wrong. Please try again.");
       }
-    } catch (err) {
+    } catch {
       setStatus("error");
-      const errorMessage = err instanceof Error ? err.message : "Could not reach the server. Please try again later.";
-      setErrorMsg(errorMessage);
-      console.error("Form submission error:", errorMessage);
+      setErrorMsg("Could not reach the server. Please try again later.");
     }
   };
 
