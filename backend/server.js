@@ -15,23 +15,29 @@ const allowedOrigins = [
   "https://big-binary-erp.vercel.app",
   "https://big-binary-erp-backend.vercel.app",
   "https://launchpad-to-expert-main-pl1n.vercel.app",
+  "https://www.bbt.edu.pk",
+  "https://bbt.edu.pk",
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
 const allowAll = process.env.FRONTEND_URL === "*";
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (allowAll || !origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["POST", "GET"],
-  })
-);
+const corsOptions = {
+  origin: allowAll
+    ? "*"
+    : (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+          callback(null, true);
+        } else {
+          callback(new Error("Not allowed by CORS"));
+        }
+      },
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 // ─── Nodemailer Transporter ───────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
