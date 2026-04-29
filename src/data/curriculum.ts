@@ -80,7 +80,7 @@ export const curriculumData: CurriculumTrack[] = [
     ],
     outcomes: [
       { label: "Expert Outcome", value: "AI Expert at Big Binary Tech" },
-      { label: "International Path", value: "LLM Engineer via Andela/Toptal", highlight: "$50–120/hr" },
+      { label: "International Path", value: "LLM Engineer via Andela/Toptal", highlight: "Global-ready. Remote-ready. In-demand." },
       { label: "Market Gap", value: "10:1 demand-to-supply ratio", highlight: "Andela training 15,000 — still not enough" },
     ],
   },
@@ -134,7 +134,7 @@ export const curriculumData: CurriculumTrack[] = [
     ],
     outcomes: [
       { label: "Expert Outcome", value: "DevOps/AI Expert at Big Binary Tech" },
-      { label: "International Path", value: "MLOps Engineer via Andela/Toptal", highlight: "$60–100/hr" },
+      { label: "International Path", value: "MLOps Engineer via Andela/Toptal", highlight: "One of the rarest skill sets in the world." },
       { label: "Market Gap", value: "Only 9% of engineers globally", highlight: "have real multi-cloud MLOps experience" },
     ],
   },
@@ -187,7 +187,7 @@ export const curriculumData: CurriculumTrack[] = [
       },
     ],
     outcomes: [
-      { label: "Expert Outcome", value: "Odoo Dev Expert at Big Binary Tech", highlight: "$3,000–15,000/project" },
+      { label: "Expert Outcome", value: "Odoo Dev Expert at Big Binary Tech", highlight: "A niche most developers have never even heard of." },
       { label: "Niche Advantage", value: "Almost no Pakistani institutes", highlight: "teach Odoo development properly" },
       { label: "Live Work", value: "BBT has active Odoo client projects", highlight: "Internees contribute from day one" },
     ],
@@ -249,7 +249,7 @@ export const curriculumData: CurriculumTrack[] = [
     outcomes: [
       { label: "Expert Outcome", value: "Full Stack Expert at Big Binary Tech" },
       { label: "Platform Path", value: "Andela standard stack qualification", highlight: "React + Node + TypeScript" },
-      { label: "Differentiator", value: "AI integration layer — not generic web dev", highlight: "commands 30–50% higher rates" },
+      { label: "Differentiator", value: "AI integration layer — not generic web dev", highlight: "The skill gap clients actually pay a premium for." },
     ],
   },
 

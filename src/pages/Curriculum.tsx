@@ -140,13 +140,21 @@ const Curriculum = () => {
             </div>
 
             {/* Outcomes */}
-            <div className="grid md:grid-cols-3 gap-4 border-t pt-10">
+            <div className="grid md:grid-cols-3 gap-5 border-t pt-10">
               {track.outcomes.map((o, i) => (
-                <div key={i} className="p-5 border rounded">
-                  <p className="text-xs text-primary mb-2">{o.label}</p>
-                  <p>{o.value}</p>
+                <div
+                  key={i}
+                  className="relative flex flex-col gap-3 p-6 rounded-lg border border-border/60 bg-muted/20 overflow-hidden"
+                >
+                  <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-primary rounded-l-lg" />
+                  <p className="text-[10px] uppercase tracking-widest text-primary font-medium pl-1">
+                    {o.label}
+                  </p>
+                  <p className="text-base font-semibold leading-snug text-foreground pl-1">
+                    {o.value}
+                  </p>
                   {o.highlight && (
-                    <p className="text-primary font-semibold">
+                    <p className="text-xs text-muted-foreground pl-1 leading-relaxed border-t border-border/40 pt-3 mt-auto">
                       {o.highlight}
                     </p>
                   )}
