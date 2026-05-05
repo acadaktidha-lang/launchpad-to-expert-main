@@ -40,22 +40,34 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 // ─── Nodemailer Transporter ───────────────────────────────────────────────────
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+const requiredEnv = ["GMAIL_USER", "GMAIL_APP_PASSWORD", "RECEIVER_EMAIL"];
+const missingEnv = requiredEnv.filter((name) => !process.env[name]);
 
-// Verify transporter on startup
-transporter.verify((error) => {
-  if (error) {
-    console.error("❌ Mail transporter error:", error.message);
-  } else {
-    console.log("✅ Mail transporter is ready");
-  }
-});
+if (missingEnv.length > 0) {
+  console.error("❌ Missing required environment variables:", missingEnv.join(", "));
+}
+
+const transporter = missingEnv.length === 0
+  ? nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
+    })
+  : null;
+
+if (transporter) {
+  transporter.verify((error) => {
+    if (error) {
+      console.error("❌ Mail transporter error:", error.message);
+    } else {
+      console.log("✅ Mail transporter is ready");
+    }
+  });
+} else {
+  console.error("❌ Email transporter is disabled until required credentials are configured.");
+}
 
 // ─── Validation Helper ────────────────────────────────────────────────────────
 function validateContactForm({ firstName, lastName, email, service, message }) {
@@ -69,6 +81,13 @@ function validateContactForm({ firstName, lastName, email, service, message }) {
 
 // ─── POST /api/contact ────────────────────────────────────────────────────────
 app.post("/api/contact", async (req, res) => {
+  if (!transporter) {
+    return res.status(503).json({
+      success: false,
+      error: "Email service unavailable. Missing backend credentials.",
+    });
+  }
+
   const { firstName, lastName, email, phone, service, message } = req.body;
 
   // Validate
@@ -192,3 +211,4 @@ if (require.main === module) {
 }
 
 module.exports = app;
+exports.default = app;
