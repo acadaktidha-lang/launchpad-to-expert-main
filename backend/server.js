@@ -20,22 +20,7 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
 ].filter(Boolean);
 
-<<<<<<< HEAD
-// CORS configuration - accept vercel deployments and localhost
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      const allowedOrigins = [
-        "http://localhost:8080",
-        "http://localhost:5173",
-        "https://www.bigbinaryerp.com",
-        "https://big-binary-erp.vercel.app",
-        "https://big-binary-erp-backend.vercel.app",
-        process.env.FRONTEND_URL,
-      ].filter(Boolean);
-=======
 const allowAll = process.env.FRONTEND_URL === "*";
->>>>>>> 1818cbabc8f7201a70ea3f79ba0a33887589ee3e
 
 const corsOptions = {
   origin: allowAll
@@ -199,10 +184,10 @@ app.get("/api/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
-if (process.env.NODE_ENV !== "production") {
+// ─── Vercel / Local Export ─────────────────────────────────────────────────────
+if (require.main === module) {
   app.listen(PORT, () => {
-    console.log(`🚀 Server running on http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
