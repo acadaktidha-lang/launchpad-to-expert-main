@@ -193,8 +193,15 @@ app.post("/api/contact", async (req, res) => {
 
     return res.status(200).json({ success: true, message: "Email sent successfully!" });
   } catch (err) {
-    console.error("❌ Email send error:", err.message);
-    return res.status(500).json({ success: false, error: "Failed to send email. Please try again." });
+    console.error("❌ Email send error:", err);
+    return res.status(500).json({
+      success: false,
+      error: "Failed to send email. Please try again.",
+      detail: err.message,
+      code: err.code,
+      command: err.command,
+      responseCode: err.responseCode,
+    });
   }
 });
 
